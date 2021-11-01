@@ -1,13 +1,23 @@
 <template>
   <div class="routine-wrapper">
     <header class="header">
-      <div class="date-wrapper">
+      <div class="header-visible">
+      </div>
+      <div class="date-wrapper" v-show="dateVisible==='second'">
         <span class="header-word2">年份选择：</span>
-        <Date class="header-date"/>
+        <DateYear/>
+        <div class="div1"></div>
+      </div>
+      <div class="date-wrapper" v-show="dateVisible==='first'">
+        <span class="header-word2">天数选择：</span>
+        <DateDay/>
+        <div class="div1"></div>
       </div>
       <div class="tab-wrapper">
         <span class="header-word">到报率统计</span>
-        <Tab class="header-tab"/>
+        <Tab class="header-tab"
+             :value.sync="dateVisible"
+        />
       </div>
       <div class="newspaper">
         <div class="newspaper-wrapper">
@@ -20,22 +30,35 @@
         </div>
       </div>
     </header>
-    <i class=" el-icon-error" style="font-size: 21px;color:#F57D65;opacity: 0.6;">
-    </i>
-    <div class="warning">
-      <div class="warning-wrapper">
-        <span class="warning-word1">近5天数据异常提醒</span>
-        <span class="warning-word2">近5天有200条记录， 缺失数据站点如下：浦江、兰溪、金华、 义乌、东阳、磐安、武义。</span>
+      <div class="warning" v-show="show">
+        <i class="el-icon-close" style="color:#A4A6AA;" @click="click"></i>
+        <div class="warning-wrapper">
+          <span class="warning-word1">近5天数据异常提醒</span>
+          <div class="warning-word2">近5天有200条记录。缺失条数10条记录 缺失数据站点如下：<span>浦江、兰溪、金华、 义乌、东阳、磐安、武义。</span></div>
+        </div>
       </div>
     </div>
-  </div>
 </template>
 <script>
 import Tab from "../../components/Tab";
-import Date from "../../components/Date";
+import DateYear from "../../components/DateYear";
+import DateDay from "../../components/DateDay";
 
 export default {
-  components: {Tab, Date}
+  data(){
+    return{
+      show:true,
+      style:'',
+      dateVisible:'second',
+    }
+  },
+  methods:{
+    click(){
+      this.show = this.show !== true;
+      this.style='none'
+    }
+  },
+  components: {DateYear, Tab,DateDay}
 }
 </script>
 <style lang="less" scoped>
@@ -46,7 +69,17 @@ export default {
   flex-direction: column;
   .header {
     padding-top: 21px;
-    padding-bottom: 100px;
+    padding-bottom: 80px;
+    position: relative;
+    .header-visible{
+      width: 18px;
+      height: 18px;
+      background: white;
+      position: absolute;
+      right: 0;
+      transform: translateY(30px);
+      z-index: 100;
+    }
     .newspaper{
       display: flex;
       align-items: center;
@@ -65,6 +98,7 @@ export default {
           font-size: 12px;
           color: #8C8C8C;
           line-height: 17px;
+          font-family: PingFangSC-Regular, PingFang SC;
         }
       }
       .newspaper-wrapper2{
@@ -82,6 +116,7 @@ export default {
           font-size: 12px;
           color: #8C8C8C;
           line-height: 17px;
+          font-family: PingFangSC-Regular, PingFang SC;
         }
       }
     }
@@ -106,7 +141,16 @@ export default {
       align-items: center;
       position: absolute;
       right: 0;
-      transform: translateX(-43px);
+      transform: translateX(-43px) translateY(-5px);
+      z-index: 1;
+      .div1{
+        position: absolute;
+        width: 20px;
+        height: 20px;
+        background: white;
+        right: 0;
+        transform: translateX(25px) translateY(3px);
+      }
       .header-word2 {
         font-size: 12px;
         font-family: PingFangSC-Regular, PingFang SC;
@@ -123,7 +167,11 @@ export default {
           display: flex;
           flex-direction: row-reverse;
           .el-range-input{
+            width: 30px;
+            margin-right: 35px;
             color: #000000 !important;
+            white-space:nowrap;
+            overflow:auto;
 
           }
           .el-input__icon.el-range__close-icon {
@@ -132,40 +180,48 @@ export default {
 
           .el-range-separator {
             padding: 0 !important;
+            display: none;
           }
 
           .el-input__icon {
             margin: 0;
-            margin-left: 20px;
+
             margin-right: 10px;
           }
         }
       }
     }
   }
-  .el-icon-error {
-    position: fixed;
-    right: 0;
-    bottom: 0;
-  }
+
   .warning {
     position: fixed;
-    right: 0;
-    bottom: 0;
+    right: 27px;
+    //transform: translateY(80px);
+     top: 670px;
+    box-shadow: 0 0 8px 0 rgba(0, 0, 0, 0.09);
+    border-radius: 4px;
+    .el-icon-close{
+      position: absolute;
+      z-index: 1;
+      right: 0;
+      transform: translateY(10px) translateX(-10px);
+    }
     .warning-wrapper {
       width: 280px;
       height: 120px;
-      background: #F57D65;
+      background: white;
+      opacity: 0.9;
       border-radius: 4px;
-      color: white;
 
       .warning-word1 {
         padding-top: 11px;
         padding-left: 16px;
         display: block;
-        font-size: 18px;
+        font-size: 16px;
         font-family: PingFangSC-Semibold, PingFang SC;
         line-height: 25px;
+        color: #333333;
+        font-weight: 600;
       }
 
       .warning-word2 {
@@ -176,8 +232,14 @@ export default {
         margin: 8px 16px;
         font-family: PingFangSC-Regular, PingFang SC;
         line-height: 20px;
+        color: #333333;
+        >span {
+          font-weight: 600;
+        }
       }
     }
   }
+
 }
+
 </style>

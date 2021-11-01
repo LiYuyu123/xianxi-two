@@ -13,6 +13,7 @@
 <script>
 import Tabs from "./common/Tabs";
 import Header from "./common/Header";
+
 export default {
   name: 'Home',
   components: {
@@ -24,14 +25,18 @@ export default {
 .home{
   display: flex;
   flex-direction: column;
+  height: 100vh;
   //background: #EEF3F9;
+
   .tabs-wrapper {
     padding: 0 49px;
+    flex-grow: 1;
     .tabs {
     }
   }
   .footer{
     text-align: center;
+    padding-bottom: 12px;
     >span{
       font-size: 12px;
       font-family: PingFangSC-Regular, PingFang SC;

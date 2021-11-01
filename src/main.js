@@ -6,18 +6,16 @@ import 'element-ui/lib/theme-chalk/index.css'
 import './assets/less/reset.less'
 import Highchart from "highcharts/highcharts";
 import HighchartsVue from "highcharts-vue";
-
-
-
+import store from "./store";
 
 Vue.use(Highchart)
 Vue.use(HighchartsVue);
-
-
 Vue.config.productionTip = false
 Vue.use(ElementUI)
 
+
 new Vue({
   router,
+  store,
   render: h => h(App)
 }).$mount('#app')

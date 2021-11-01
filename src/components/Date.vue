@@ -1,11 +1,14 @@
 <template>
   <div class="block">
+    <i class="el-icon-sort-down " style="font-size: 4px;opacity: 0.25;">
+    </i>
+    <i>
+    </i>
     <el-date-picker
         v-model="value1"
         type="daterange"
-        range-separator="-"
         start-placeholder="2021"
-        end-placeholder="2022"
+        end-placeholder="2001"
         popper-class="date-style"
     >
     </el-date-picker>
@@ -14,6 +17,9 @@
 
 <script>
 export default {
+  mounted() {
+    this.value1
+  },
   data() {
     return {
       pickerOptions: {
@@ -44,14 +50,17 @@ export default {
         }]
       },
       value1: '',
-      value2: ''
     };
   }
 };
 </script>
 <style lang="less" scoped>
-.date-style.el-date-editor{
-
-
+.block{
+  position: relative;
+  .el-icon-sort-down{
+   position: absolute;
+    z-index: 1;
+     transform: rotateX(180deg) rotateZ(270deg) translateY(60px) translateX(10px);
+  }
 }
 </style>

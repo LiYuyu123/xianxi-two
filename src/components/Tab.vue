@@ -1,14 +1,21 @@
 <template>
   <el-tabs v-model="activeName" @tab-click="handleClick" class="tab-wrapper">
-    <el-tab-pane label="按日" name="first"></el-tab-pane>
-    <el-tab-pane label="按年" name="second">
-      <Chart />
+    <el-tab-pane label="按日" name="first"  class="day-wrapper" >
+      <Chart :option="dayOption"></Chart>
+    </el-tab-pane>
+    <el-tab-pane label="按年" name="second"  class="year-wrapper">
+      <Chart :option="option"></Chart>
     </el-tab-pane>
   </el-tabs>
 </template>
 <script>
 import Chart from "./Chart";
+import {mapState} from "vuex";
 export default {
+  computed:mapState({
+    option:state => state.option,
+    dayOption:state => state.dayOption
+  }),
   data() {
     return {
       activeName: 'second'
@@ -16,8 +23,8 @@ export default {
   },
   components:{Chart},
   methods: {
-    handleClick(tab, event) {
-      console.log(tab, event);
+    handleClick(tab) {
+      this.$emit('update:value',tab.name)
     }
   }
 };
@@ -40,7 +47,9 @@ export default {
   }
   /deep/ .el-tabs__nav-wrap.is-top::after {
     display: block;
-    border: 1px solid rgba(0, 0, 0, 0.15);
+    border: 0.3px solid #ededed;
+    margin-left: 18px;
+    margin-right: -30px;
   }
   /deep/.el-tabs__item.is-top.is-active{
     font-weight: 400 !important;
@@ -49,6 +58,18 @@ export default {
   /deep/ .el-tabs__active-bar.is-top {
     height: 2px;
     background: #1890FF;
+  }
+}
+.day-wrapper{
+ /deep/ .div1{
+   height: 255px;
+   transform:translateX(118px) translateY(111px) ;
+ }
+}
+.year-wrapper{
+  /deep/ .div1{
+    height: 288px;
+    transform:translateX(115px) translateY(78px) ;
   }
 }
 </style>

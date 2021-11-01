@@ -1,5 +1,5 @@
 <template>
-  <el-tabs v-model="activeName" @tab-click="handleClick" class="tabs123">
+  <el-tabs v-model="activeName"  class="tabs123">
     <el-tab-pane label="主站到报统计" name="first">用户管理</el-tab-pane>
     <el-tab-pane label="常规计数统计" name="second" class="second">
     <Routine class="routine"/>
@@ -8,6 +8,7 @@
 </template>
 <script>
 import Routine from "./Routine";
+
 export default {
   components: {Routine},
   data() {
