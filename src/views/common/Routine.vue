@@ -19,7 +19,7 @@
              :value.sync="dateVisible"
         />
       </div>
-      <div class="newspaper">
+      <div class="newspaper" >
         <div class="newspaper-wrapper">
           <div class="div1"></div>
           <span class="word1">到报率 (%) 正常</span>
@@ -27,6 +27,10 @@
         <div class="newspaper-wrapper2">
           <div class="div2"></div>
           <span class="word2">到报率 (%) 异常</span>
+        </div>
+        <div class="newspaper-wrapper3" v-show="dateVisible==='first'">
+          <div class="div3"></div>
+          <span class="word3">缺报条数</span>
         </div>
       </div>
     </header>
@@ -69,7 +73,7 @@ export default {
   flex-direction: column;
   .header {
     padding-top: 21px;
-    padding-bottom: 80px;
+    padding-bottom: 60px;
     position: relative;
     .header-visible{
       width: 18px;
@@ -84,6 +88,7 @@ export default {
       display: flex;
       align-items: center;
       justify-content: center;
+      padding-top: 20px;
       .newspaper-wrapper{
         display: flex;
         align-items: center;
@@ -111,6 +116,24 @@ export default {
           background: #F57D65;
         }
         .word2{
+          display: inline-block;
+          padding-left: 10px;
+          font-size: 12px;
+          color: #8C8C8C;
+          line-height: 17px;
+          font-family: PingFangSC-Regular, PingFang SC;
+        }
+      }
+      .newspaper-wrapper3{
+        display: flex;
+        align-items: center;
+        padding-left: 30px;
+        .div3{
+          width: 8px;
+          height: 8px;
+          background: #EBEBEB;
+        }
+        .word3{
           display: inline-block;
           padding-left: 10px;
           font-size: 12px;

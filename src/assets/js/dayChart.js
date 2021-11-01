@@ -1,5 +1,6 @@
 export const createDay = (data, date, dateName) => {
     let findData = []
+    let surplusData=[]
     for (let i = 0; i < data.length; i++) {
         const d = data[i]
         findData.push({
@@ -7,9 +8,13 @@ export const createDay = (data, date, dateName) => {
             color: d < 100 ? '#F57D65' : '#4FC88C'
         })
     }
-    // const dayOne = date[0]
-    // const dayTwo = date[1]
-    console.log(date[0])
+    for(let i=0;i<data.length;i++){
+        const s=100-data[i]
+        surplusData.push({
+            y:s===0 ? undefined : s,
+            color:'#ebebeb'
+        })
+    }
     return {
         chart: {
             type: 'column',
@@ -24,7 +29,7 @@ export const createDay = (data, date, dateName) => {
             }
         },
         subtitle: {
-            text: '<div style="padding-top: 5px;padding-bottom: 10px"><div style="font-size: 14px;font-family: PingFangSC-Regular, PingFang SC;font-weight: 400;line-height: 24px;color: #000000;">2021年8月1日至2021年8月31日有1200条记录，缺失条数200条记录，缺失数据站点如下:</div><div style="font-size: 14px;font-family: PingFangSC-Regular, PingFang SC;font-weight: 600;line-height: 24px;color: #000000;">浦江、兰溪、金华、义乌、东阳、磐安、武义、永康、金华应急车、源东、三江街道</div></div>',
+            text: `<div style="padding-top: 5px;padding-bottom: 10px"><div style="font-size: 14px;font-family: PingFangSC-Regular, PingFang SC;font-weight: 400;line-height: 24px;color: #000000;">${dateName ? dateName : '2021年8月1日至2021年8月31日'}有1200条记录，缺失条数200条记录，缺失数据站点如下:</div><div style="font-size: 14px;font-family: PingFangSC-Regular, PingFang SC;font-weight: 600;line-height: 24px;color: #000000;">浦江、兰溪、金华、义乌、东阳、磐安、武义、永康、金华应急车、源东、三江街道</div></div>`,
             useHTML: true,
         },
         xAxis: {
@@ -55,6 +60,15 @@ export const createDay = (data, date, dateName) => {
         },
         legend: {
             enabled: false,
+            align: 'right',
+            x: -30,
+            verticalAlign: 'top',
+            y: 25,
+            floating: true,
+            backgroundColor:  'white',
+            borderColor: '#CCC',
+            borderWidth: 1,
+            shadow: false
         },
         tooltip: {
             // head + 每个 point + footer 拼接成完整的 table
@@ -68,10 +82,21 @@ export const createDay = (data, date, dateName) => {
         },
         plotOptions: {
             column: {
-                borderWidth: 0
+                borderWidth: 0,
+                stacking: 'normal',
+                dataLabels: {
+                    enabled: true,
+                    color:  '#525252',
+                    fontSize: '12px',
+                    style: {
+                        textOutline: 'none'
+                    }
+                }
             }
         },
         series: [{
+            data: surplusData
+        },{
             data: findData
         }]
     }
